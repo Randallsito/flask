@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block contingut %}
+
+<h2>Panell de Monitorització</h2>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Estat API</h3>
+        <p class="ok">Funcionant correctament</p>
+    </div>
+
+    <div class="card">
+        <h3>Disc</h3>
+        <p><b>Sistema:</b> {{ disk.filesystem }}</p>
+        <p><b>Mida:</b> {{ disk.size }}</p>
+        <p><b>Usat:</b> {{ disk.used }}</p>
+        <p><b>Lliure:</b> {{ disk.available }}</p>
+
+        <div class="bar">
+            <div class="bar-fill" style="width: {{ disk.use_percent }};">
+                {{ disk.use_percent }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Base de dades</h3>
+        {% if db.status == "ok" %}
+            <p class="ok">MySQL connectat</p>
+        {% else %}
+            <p class="error">Error MySQL</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3>Serveis</h3>
+        {% for name, info in services.items() %}
+            <p>
+                <b>{{ name }}</b>:
+                {% if info.status == "active" %}
+                    <span class="ok">actiu</span>
+                {% else %}
+                    <span class="error">{{ info.status }}</span>
+                {% endif %}
+            </p>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h3>Usuaris</h3>
+        <p><b>Total:</b> {{ users|length }}</p>
+        <p>{{ users[:10]|join(", ") }}...</p>
+    </div>
+
+    <div class="card">
+        <h3>Accés JSON</h3>
+        <div class="links">
+            <a href="/api/disk" target="_blank">Disk</a>
+            <a href="/api/users" target="_blank">Users</a>
+            <a href="/api/db" target="_blank">DB</a>
+            <a href="/api/services" target="_blank">Services</a>
+            <a href="/api/webs" target="_blank">Webs</a>
+        </div>
+    </div>
+
+    <div class="card full">
+        <h3>Estat webs HTTPS</h3>
+        <table class="web-table">
+            <tr>
+                <th>Web</th>
+                <th>URL</th>
+                <th>Codi</th>
+                <th>Estat</th>
+            </tr>
+
+            {% for name, info in webs.items() %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ info.url }}</td>
+                <td>{{ info.code }}</td>
+                <td>
+                    {% if info.code == 200 or info.code == 301 or info.code == 302 %}
+                        <span class="ok">OK</span>
+                    {% else %}
+                        <span class="error">ERROR</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

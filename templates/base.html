@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Monitorització</title>
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <main>
-        {% block contigut %} {% endblock %}
-    </main>
+
+<header>
+    <h1>El meu sistema</h1>
+</header>
+
+<main>
+    {% block contingut %}
+    {% endblock %}
+</main>
+
+<footer>
+    <p>Footer</p>
+</footer>
+
 </body>
 </html>

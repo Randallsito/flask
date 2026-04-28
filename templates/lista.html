@@ -6,7 +6,7 @@
 
 <ul>
     {% for element in llista %}
-        <li>{{ element }}</li>
+        <li>{{ loop.index }} - {{ element }}</li>
     {% endfor %}
 </ul>
 
