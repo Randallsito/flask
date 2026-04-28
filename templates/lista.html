@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block contingut %}
+
+<h2>{{ nom_llista }}</h2>
+
+<ul>
+    {% for element in llista %}
+        <li>{{ element }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
